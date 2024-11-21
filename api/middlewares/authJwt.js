@@ -27,9 +27,22 @@ isExist = async (req, res, next) => {
   }
   next();
 };
+isRole = (requiredRole) => async (req, res, next) => {
+  const user = await User.findById(req.userId);
+  if (!user) {
+    return res.status(403).send({ message: "User not found" });
+  }
+
+  if (user.role !== requiredRole) {
+    return res.status(403).send({ message: "Role not matching" });
+  }
+
+  next();
+};
 
 const authJwt = {
   verifyToken,
   isExist,
+  isRole,
 };
 module.exports = authJwt;

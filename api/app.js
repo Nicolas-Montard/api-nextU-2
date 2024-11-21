@@ -20,7 +20,7 @@ app.get('/api/todos',[authJwt.verifyToken,authJwt.isExist],async (req,res)=>{
     res.status(500).send('Erreur lors de la récupération des tâches');
   }   
 })
-app.post('/api/todos', [authJwt.verifyToken,authJwt.isExist],async (req, res) => {
+app.post('/api/todos', [authJwt.verifyToken,authJwt.isExist, authJwt.isRole('Admin')],async (req, res) => {
     try {
       const newTodo = new Todo({
         title: req.body.title,
@@ -51,7 +51,7 @@ app.get('/api/todos/:id', [authJwt.verifyToken,authJwt.isExist],async (req, res)
     }
     
 });
-app.put('/api/todos/:id',[authJwt.verifyToken,authJwt.isExist], async (req, res) => {
+app.put('/api/todos/:id',[authJwt.verifyToken,authJwt.isExist,authJwt.isRole('Admin')], async (req, res) => {
     const todo = await Todo.findById(req.params.id);
     if (!todo) {
         return res.status(404).send('Tâche non trouvée');

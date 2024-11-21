@@ -21,7 +21,7 @@ exports.signup = async (req, res) => {
 exports.signin = async (req, res) => {
     const user = await User.findOne({ username: req.body.username });
     var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-  
+
     if (!passwordIsValid) {
       return res.status(401).send({
         accessToken: null,
