@@ -1,4 +1,4 @@
-# HTTP Avancé
+# API Avancé
 
 #### Cache-Control :
 L'en-tête HTTP Cache-Control contient des directives (c'est-à-dire des instructions), dans les requêtes et dans les réponses, pour contrôler la mise en cache dans les navigateurs et caches partagées (par exemple les proxies, CDN).
@@ -45,6 +45,46 @@ https://fideloper.com/etags-and-optimistic-concurrency-control
  - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Transfer-Encoding
 
 
+#### Jwt
+JSON Web Token (JWT) est un standard ouvert défini dans la RFC 75191. Il permet l'échange sécurisé de jetons (tokens) entre plusieurs parties. Cette sécurité de l’échange se traduit par la vérification de l'intégrité et de l'authenticité des données. Elle s’effectue par l'algorithme HMAC ou RSA.
+
+Un jeton se compose de trois parties :
+
+Un en-tête (header), utilisé pour décrire le jeton. Il s'agit d'un objet JSON.
+Une charge utile (payload) qui représente les informations embarquées dans le jeton. Il s'agit également d'un objet JSON.
+Une signature numérique.
+Il existe des outils en ligne permettant de les déchiffrer (https://jwt.io/)
+
+Header
+```
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+Body
+```
+{
+  "id": "673ed83af4d39e8c58f65f4d",
+  "iat": 1732172206,
+  "exp": 1732258606
+}
+```
+
+Signature
+```
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  your-256-bit-secret
+)
+```
+
+
+IL est recommandé de stocker un jeton jwt dans les cookies pour eviter les vols de token.
+
+
+![alt text for screen readers](/images/jwt.png)
 ###  - Ressources additionnelles
 - https://technicalsand.com/streaming-data-spring-boot-restful-web-service/
 - https://datatracker.ietf.org/doc/html/rfc2616#section-13.4
